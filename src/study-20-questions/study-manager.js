@@ -18,6 +18,7 @@ var introTemplate = require("../templates/introduction.html");
 var irbTemplate = require("../templates/irb.html");
 var demographicsTemplate = require("./templates/demographics.html");
 var question1Template = require("./templates/questions1.html");
+var question2Template = require("./templates/questions2.html");
 var loadingTemplate = require("../templates/loading.html");
 var resultsTemplate = require("../templates/results.html");
 var resultsFooter = require("../templates/results-footer.html");
@@ -32,6 +33,7 @@ module.exports = (function(exports) {
 		questionsAndResponses: {},
 		progressBarWidth: -50,
 		numQuestions: 20,
+		pageNum: 1,
 		study_id: "TO_BE_ADDED_IF_USING_LITW_INFRA",
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
@@ -68,6 +70,14 @@ module.exports = (function(exports) {
 				display_element: $("#question1"),
 				display_next_button: false,
 			},
+			QUESTION2: {
+				name: "questionnaire",
+				type: "display-slide",
+				template: question2Template,
+				template_data: getStudyQuestions,
+				display_element: $("#question2"),
+				display_next_button: false,
+			},
 			COMMENTS: {
 				type: "display-slide",
 				template: commentsTemplate,
@@ -96,6 +106,7 @@ module.exports = (function(exports) {
 		timeline.push(params.slides.INFORMED_CONSENT);
 		timeline.push(params.slides.DEMOGRAPHICS);*/
 		timeline.push(params.slides.QUESTION1);
+		timeline.push(params.slides.QUESTION2);
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
 	}
@@ -104,17 +115,24 @@ module.exports = (function(exports) {
 		let counter = 1;
 		let numQ = 20;
 		let quest = {
-			questions: [],
-			responses: []
+			questions: []
 		}
 		while(counter <= numQ) {
-			quest.questions.push({
-				id: counter, //change ID
-				text: counter + ". " + $.i18n(`litw-question-page1-prompt`)
-			})
+			if (params.pageNum == 1) {
+				quest.questions.push({
+					id: counter, //change ID
+					text: counter + ". " + $.i18n(`litw-question-page1-prompt`)
+				})
+			} else {
+				quest.questions.push({
+					id: counter, //change ID
+					text: counter + ". " + $.i18n(`litw-question-page2-prompt`) + params.questionsAndResponses[counter],
+				})
+			}
 			counter++;
 		}
 		params.progressBarWidth += 50;
+		params.pageNum++;
 		return quest;
 	}
 

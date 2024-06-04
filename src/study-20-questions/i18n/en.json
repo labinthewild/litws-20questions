@@ -107,15 +107,20 @@
   "litw-question-page1-title": "Who am I?",
   "litw-question-page1-instructions": "There are twenty numbered text entry boxes below. Please write twenty answers to the simple question 'Who am I?' in the boxes. Just give twenty different answers to this question. Answer as if you were giving the answers to yourself, not to somebody else. Write the answers in the order that they occur to you. Don't worry about logic or 'importance.' Go along as fast as you can.",
   "litw-question-page1-prompt": "I am...",
+  "litw-question-page2-prompt": "I am ",
   "litw-question-page2-title": "Now it’s time to label your responses!",
   "litw-question-page2-instructions": "In the drop-down field next to your responses, please choose which responses fall under the following categories (if in doubt, use your best judgement):",
   "litw-question-page2-personal-info": "Personal statements that do not relate to other people, e.g., “I am short”, I am from India”, I am honest”, “I am strong”.",
   "litw-question-page2-relationships-info": "Relationships, roles, and statuses (usually associated with a group membership of some sort), e.g., “I am a college student”, “I am a Catholic”, “I am an African American”, “I am a gamer”, “I am a daughter”, “I am a sales clerk”.",
   "litw-question-page2-other-info": "Other statements, e.g., “I am considered a kind person”, “I am able to tell when someone is angry with me”, I am a person who wants to help others”.",
+  "litw-question-page2-dropdown1": "Personal Statement",
+  "litw-question-page2-dropdown2": "Relationships, Roles, Or Status Statement",
+  "litw-question-page2-dropdown3": "Other Statement",
   "litw-results-private1": "Your answers suggest that you emphasize your private self more than your collective identity.",
   "litw-results-private2": "This means that you likely have a more individualist self-concept than a collectivist self-concept.",
   "litw-results-collective1": "Your answers suggest that you emphasize your collective identity more than your private self.",
   "litw-results-collective2": "This means that you likely have a more collectivist self-concept than an individualist self-concept.",
   "litw-results-graph-info": "Have a look at this graph to see how this compares to others:",
-  "litw-20-questions-save": "Submit"
+  "litw-20-questions-save": "Submit",
+  "litw-progress-bar-label": "Study Completion"
 }
