@@ -16,7 +16,7 @@ require("jquery-ui-bundle");
 var _ = require('lodash');
 var introTemplate = require("../templates/introduction.html");
 var irbTemplate = require("../templates/irb.html");
-var demographicsTemplate = require("../templates/demographics.html");
+var demographicsTemplate = require("./templates/demographics.html");
 var instructionsTemplate = require("../templates/instructions.html");
 var loadingTemplate = require("../templates/loading.html");
 var resultsTemplate = require("../templates/results.html");
