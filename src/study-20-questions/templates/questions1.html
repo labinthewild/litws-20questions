@@ -1,0 +1,69 @@
+<h6 class="text-center bolded-blue">Study Completion</h6>
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 60px;">
+    <p class="bolded-blue" style="margin-right: 10px; margin-bottom: 0px;">0%</p>
+    <div id="progress-bar" style="width: 35%; background-color: rgba(232,232,235,255); border-radius: 50px; ">
+        <div id="bar" style="width: 0%; height: 15px; background-color: rgba(0,52,160,255);  border-radius: 50px; "></div>
+    </div>
+    <p class="bolded-blue" style="margin-left: 10px; margin-bottom: 0px;">100%</p>
+</div>
+
+<div id="question-box" class="instructions-stim-container">
+    <div id="questionnaire">
+        <div class="row gap-2">
+            <h3 class="bolded-blue">
+                <span data-i18n="litw-question-page1-title"></span>
+            </h3>
+        </div>
+        <h6 class="text-center" data-i18n="litw-question-page1-instructions"></h6>
+    {{#each questions}}
+        <div class="row mt-4" style="display:flex; justify-content: space-around; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; align-items: center;">
+            <h6 style="width: 120px; margin-left: auto;"  data-type="question" class="bolded-blue">{{ this.text }}</h6>
+            <input style="width: 50%; margin-right: auto" type="text" id="response-{{ this.id }}" name="response">
+        </div>
+    {{/each}}
+        <div id="submit" class="row mt-4 invisible">
+            <button id="button-save" type="button" class="btn btn-primary" data-bs-toggle="button"
+                    data-i18n="study-mann-save" onclick="finishQuestions()"></button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    LITW.study.params.numQuestions = document.querySelectorAll('[data-type="question"]').length;
+
+    $(document).ready(function() {
+        document.getElementById('submit').classList.add('invisible');
+        let elem = document.getElementById("bar");
+        elem.style.width = LITW.study.params.progressBarWidth + "%";
+    });
+
+    function respondQuestion (qID, rID) {
+        selectResponse(qID, rID);
+        LITW.study.params.questionsAndResponses[qID] = rID;
+        if(Object.keys(LITW.study.params.questionsAndResponses).length % LITW.study.params.numQuestions === 0) {
+            document.getElementById('submit').classList.remove('invisible');
+        }
+    }
+
+    function selectResponse (qID, rID) {
+        document.querySelectorAll(`[data-qid='${qID}']`).forEach(btn => {
+            if(btn.dataset.rid == rID && !btn.classList.contains('active')) {
+                bootstrap.Button.getOrCreateInstance(btn).toggle();
+            }
+            if(btn.dataset.rid != rID && btn.classList.contains('active')) {
+                bootstrap.Button.getOrCreateInstance(btn).toggle();
+            }
+        })
+    }
+
+    function finishQuestions () {
+        let quest = {
+                responses: LITW.study.params.questionsAndResponses
+            };
+        LITW.data.submitStudyData({
+            quest: quest
+        });
+        document.getElementById('btn-next-page').click()
+    }
+
+</script>

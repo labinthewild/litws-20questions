@@ -17,7 +17,7 @@ var _ = require('lodash');
 var introTemplate = require("../templates/introduction.html");
 var irbTemplate = require("../templates/irb.html");
 var demographicsTemplate = require("./templates/demographics.html");
-var instructionsTemplate = require("../templates/instructions.html");
+var question1Template = require("./templates/questions1.html");
 var loadingTemplate = require("../templates/loading.html");
 var resultsTemplate = require("../templates/results.html");
 var resultsFooter = require("../templates/results-footer.html");
@@ -29,6 +29,9 @@ require("../js/litw/jspsych-display-slide");
 module.exports = (function(exports) {
 	var timeline = [],
 	params = {
+		questionsAndResponses: {},
+		progressBarWidth: -50,
+		numQuestions: 0,
 		study_id: "TO_BE_ADDED_IF_USING_LITW_INFRA",
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
@@ -57,6 +60,14 @@ module.exports = (function(exports) {
 					LITW.data.submitDemographics(dem_data);
 				}
 			},
+			QUESTION1: {
+				name: "questionnaire",
+				type: "display-slide",
+				template: question1Template,
+				template_data: getStudyQuestions,
+				display_element: $("#question1"),
+				display_next_button: false,
+			},
 			COMMENTS: {
 				type: "display-slide",
 				template: commentsTemplate,
@@ -81,11 +92,30 @@ module.exports = (function(exports) {
 	};
 
 	function configureStudy() {
-		timeline.push(params.slides.INTRODUCTION);
+		/*timeline.push(params.slides.INTRODUCTION);
 		timeline.push(params.slides.INFORMED_CONSENT);
-		timeline.push(params.slides.DEMOGRAPHICS);
+		timeline.push(params.slides.DEMOGRAPHICS);*/
+		timeline.push(params.slides.QUESTION1);
 		timeline.push(params.slides.COMMENTS);
 		timeline.push(params.slides.RESULTS);
+	}
+
+	function getStudyQuestions() {
+		let counter = 1;
+		let numQ = 20;
+		let quest = {
+			questions: [],
+			responses: []
+		}
+		while(counter <= numQ) {
+			quest.questions.push({
+				id: counter, //change ID
+				text: counter + ". " + $.i18n(`litw-question-page1-prompt`)
+			})
+			counter++;
+		}
+		params.progressBarWidth += 50;
+		return quest;
 	}
 
 	function calculateResults() {
