@@ -31,7 +31,7 @@ module.exports = (function(exports) {
 	params = {
 		questionsAndResponses: {},
 		progressBarWidth: -50,
-		numQuestions: 0,
+		numQuestions: 20,
 		study_id: "TO_BE_ADDED_IF_USING_LITW_INFRA",
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
