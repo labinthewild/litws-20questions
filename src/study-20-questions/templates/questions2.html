@@ -22,7 +22,7 @@
         <div class="row mt-4" style="display:flex; justify-content: space-around; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; align-items: center;">
             <h6 style="width: 50%; margin-left: auto; margin-top: 8px;"  data-type="question" class="bolded-blue">{{ this.text }}</h6>
             <div style="display: flex; justify-content: center; max-width:400px; margin: auto;">
-                <select id="statement-selector" style="max-width: 320px; width: 400px; height: 30px;">
+                <select id="statement-selector-{{ this.id }}" style="max-width: 320px; width: 400px; height: 30px;">
                     <option style="width:320px;" selected value="0">--</option>
                     <option style="width:320px;" data-i18n="litw-question-page2-dropdown1"></option>
                     <option style="width:320px;" data-i18n="litw-question-page2-dropdown2"></option>
@@ -47,13 +47,16 @@
     });
 
     function finishQuestions() {
-        let data = {
-            responses: LITW.study.params.questionsAndResponses
-        };
-        LITW.data.submitStudyData({
-            data: data
-        });
+        getDropdownValues();
         document.getElementById('btn-next-page').click()
+    }
+
+    function getDropdownValues() {
+        for (let index = 1; index <= LITW.study.params.numQuestions; index++) {
+            let selectedStatement =  document.getElementById("statement-selector-" + index);
+            let text = selectedStatement.options[selectedStatement.selectedIndex].text;
+            LITW.study.params.responsesAndStatements[index] = text;
+        }
     }
 
 </script>

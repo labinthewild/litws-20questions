@@ -20,7 +20,7 @@ var demographicsTemplate = require("./templates/demographics.html");
 var question1Template = require("./templates/questions1.html");
 var question2Template = require("./templates/questions2.html");
 var loadingTemplate = require("../templates/loading.html");
-var resultsTemplate = require("../templates/results.html");
+var resultsTemplate = require("./templates/results.html");
 var resultsFooter = require("../templates/results-footer.html");
 var commentsTemplate = require("../templates/comments.html");
 require("../js/litw/jspsych-display-info");
@@ -31,6 +31,7 @@ module.exports = (function(exports) {
 	var timeline = [],
 	params = {
 		questionsAndResponses: {},
+		responsesAndStatements: {},
 		progressBarWidth: -50,
 		numQuestions: 20,
 		pageNum: 1,
@@ -137,9 +138,42 @@ module.exports = (function(exports) {
 	}
 
 	function calculateResults() {
-		//TODO: Nothing to calculate
-		let results_data = {}
+		let results_data = {};
+		let personalScore = 0;
+		let relationshipsScore = 0;
+		let otherScore = 0;
+		for (const key in params.responsesAndStatements) {
+    	if (params.responsesAndStatements[key] === "Personal Statement") {
+      	personalScore++;
+      } else if (params.responsesAndStatements[key] === "Relationships, Roles, Or Status Statement") {
+				relationshipsScore++;
+			} else {
+				otherScore++;
+			}
+    }
+		results_data = {
+			"personalScore": personalScore,
+			"relationshipsScore": relationshipsScore,
+			"otherScore": otherScore,
+			"questionsAndResponses": params.questionsAndResponses,
+			"responsesAndStatements": params.responsesAndStatements
+		}
+		LITW.data.submitStudyData({results_data1 : results_data});
+		chooseMessage(results_data);
+		console.log(personalScore)
+		console.log(relationshipsScore)
+		console.log(otherScore)
 		showResults(results_data, true)
+	}
+
+	function chooseMessage(results_data) {
+		if(results_data.personalScore > results_data.relationshipsScore) {
+			results_data.resultStatement1 = $.i18n('litw-results-private1');
+			results_data.resultStatement2 = $.i18n('litw-results-private2');
+		} else {
+			results_data.resultStatement1 = $.i18n('litw-results-collective1');
+			results_data.resultStatement2 = $.i18n('litw-results-collective2');
+		}
 	}
 
 	function showResults(results = {}, showFooter = false) {

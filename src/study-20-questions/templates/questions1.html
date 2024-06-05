@@ -38,12 +38,6 @@
 
     function finishQuestions() {
         collectResponses();
-        let data = {
-            responses: LITW.study.params.questionsAndResponses
-        };
-        LITW.data.submitStudyData({
-            data: data
-        });
         document.getElementById('btn-next-page').click()
     }
 
