@@ -47,7 +47,6 @@
     });
 
     function finishQuestions() {
-        collectResponses();
         let data = {
             responses: LITW.study.params.questionsAndResponses
         };
@@ -55,14 +54,6 @@
             data: data
         });
         document.getElementById('btn-next-page').click()
-    }
-
-    function collectResponses() {
-        for (let index = 1; index <= LITW.study.params.numQuestions; index++) {
-            let input =  document.getElementById("response-" + index);
-            let inputValue = input.value;
-            LITW.study.params.questionsAndResponses[index] = inputValue;
-        }
     }
 
 </script>
