@@ -16,7 +16,7 @@ require("jquery-ui-bundle");
 var _ = require('lodash');
 var introTemplate = require("../templates/introduction.html");
 var irbTemplate = require("../templates/irb.html");
-var demographicsTemplate = require("./templates/demographics.html");
+var demographicsTemplate = require("../templates/demographics.html");
 var question1Template = require("./templates/questions1.html");
 var question2Template = require("./templates/questions2.html");
 var loadingTemplate = require("../templates/loading.html");
@@ -35,6 +35,7 @@ module.exports = (function(exports) {
 		progressBarWidth: -50,
 		numQuestions: 20,
 		pageNum: 1,
+		country: "",
 		study_id: "TO_BE_ADDED_IF_USING_LITW_INFRA",
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
@@ -60,6 +61,7 @@ module.exports = (function(exports) {
 				name: "demographics",
 				finish: function(){
 					var dem_data = $('#demographicsForm').alpaca().getValue();
+					params.country = dem_data['demographics-country-grow'];
 					LITW.data.submitDemographics(dem_data);
 				}
 			},
@@ -103,9 +105,9 @@ module.exports = (function(exports) {
 	};
 
 	function configureStudy() {
-		/*timeline.push(params.slides.INTRODUCTION);
+		timeline.push(params.slides.INTRODUCTION);
 		timeline.push(params.slides.INFORMED_CONSENT);
-		timeline.push(params.slides.DEMOGRAPHICS);*/
+		timeline.push(params.slides.DEMOGRAPHICS);
 		timeline.push(params.slides.QUESTION1);
 		timeline.push(params.slides.QUESTION2);
 		timeline.push(params.slides.COMMENTS);
@@ -121,12 +123,12 @@ module.exports = (function(exports) {
 		while(counter <= numQ) {
 			if (params.pageNum == 1) {
 				quest.questions.push({
-					id: counter, //change ID
+					id: counter,
 					text: counter + ". " + $.i18n(`litw-question-page1-prompt`)
 				})
 			} else {
 				quest.questions.push({
-					id: counter, //change ID
+					id: counter,
 					text: counter + ". " + $.i18n(`litw-question-page2-prompt`) + params.questionsAndResponses[counter],
 				})
 			}
@@ -139,6 +141,8 @@ module.exports = (function(exports) {
 
 	function calculateResults() {
 		let results_data = {};
+		let country_data = {};
+		let totalNumOfPoints = 20;
 		let personalScore = 0;
 		let relationshipsScore = 0;
 		let otherScore = 0;
@@ -155,14 +159,20 @@ module.exports = (function(exports) {
 			"personalScore": personalScore,
 			"relationshipsScore": relationshipsScore,
 			"otherScore": otherScore,
+			"personalPercentage": (personalScore/totalNumOfPoints) * 100,
+			"relationshipsPercentage": (relationshipsScore/totalNumOfPoints) * 100,
+			"otherPercentage": (otherScore/totalNumOfPoints) * 100,
 			"questionsAndResponses": params.questionsAndResponses,
 			"responsesAndStatements": params.responsesAndStatements
 		}
+		country_data = {
+			"country": params.country,
+			"personalPercentage": (personalScore/totalNumOfPoints) * 100,
+			"relationshipsPercentage": (relationshipsScore/totalNumOfPoints) * 100,
+		}
 		LITW.data.submitStudyData({results_data1 : results_data});
+		LITW.data.submitStudyData({participant_country_data: country_data});
 		chooseMessage(results_data);
-		console.log(personalScore)
-		console.log(relationshipsScore)
-		console.log(otherScore)
 		showResults(results_data, true)
 	}
 
