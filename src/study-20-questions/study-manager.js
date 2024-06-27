@@ -14,7 +14,7 @@ window.$ = window.jQuery = require("jquery");
 window.bootstrap = require("bootstrap");
 require("jquery-ui-bundle");
 var _ = require('lodash');
-var introTemplate = require("../templates/introduction.html");
+var introTemplate = require("./templates/introduction.html");
 var irbTemplate = require("../templates/irb.html");
 var demographicsTemplate = require("../templates/demographics.html");
 var question1Template = require("./templates/questions1.html");
@@ -36,7 +36,7 @@ module.exports = (function(exports) {
 		numQuestions: 20,
 		pageNum: 1,
 		country: "",
-		study_id: "TO_BE_ADDED_IF_USING_LITW_INFRA",
+		study_id: "c2b9e3c2-e317-44b9-a1ea-92418c89c1b1",
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
 		slides: {
