@@ -1,0 +1,52 @@
+<h6 class="text-center bolded-blue" data-i18n="litw-progress-bar-label"></h6>
+<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 60px;">
+    <p class="bolded-blue" style="margin-right: 10px; margin-bottom: 0px;">0%</p>
+    <div id="progress-bar" style="width: 35%; background-color: rgba(232,232,235,255); border-radius: 50px; ">
+        <div id="bar" style="width: 0%; height: 15px; background-color: rgba(0,52,160,255);  border-radius: 50px; "></div>
+    </div>
+    <p class="bolded-blue" style="margin-left: 10px; margin-bottom: 0px;">100%</p>
+</div>
+
+<div id="question-box" class="instructions-stim-container">
+    <div id="questionnaire">
+        <div class="row gap-2">
+            <h3 class="bolded-blue">
+                <span data-i18n="litw-question-page1-title"></span>
+            </h3>
+        </div>
+        <h6 class="text-center" style="padding-bottom: 30px; padding-top: 20px" data-i18n="litw-question-page1-instructions"></h6>
+    {{#each questions}}
+        <div class="row mt-4" style="display:flex; justify-content: space-around; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; align-items: center;">
+            <h6 style="width: 120px; margin-left: auto; margin-top: 8px;"  data-type="question" class="bolded-blue">{{ this.text }}</h6>
+            <input style="width: 50%; margin-right: auto" type="text" required="required" id="response-{{ this.id }}" name="response">
+        </div>
+    {{/each}}
+        <div id="submit" class="row mt-4">
+            <button id="button-save" type="button" class="btn btn-primary center-content" style="width: 75%; margin-left: 15%" data-bs-toggle="button"
+                    data-i18n="litw-20-questions-save" onclick="finishQuestions()"></button>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    LITW.study.params.numQuestions = document.querySelectorAll('[data-type="question"]').length;
+
+    $(document).ready(function() {
+        let elem = document.getElementById("bar");
+        elem.style.width = LITW.study.params.progressBarWidth + "%";
+    });
+
+    function finishQuestions() {
+        collectResponses();
+        document.getElementById('btn-next-page').click()
+    }
+
+    function collectResponses() {
+        for (let index = 1; index <= LITW.study.params.numQuestions; index++) {
+            let input =  document.getElementById("response-" + index);
+            let inputValue = input.value;
+            LITW.study.params.questionsAndResponses[index] = inputValue;
+        }
+    }
+
+</script>

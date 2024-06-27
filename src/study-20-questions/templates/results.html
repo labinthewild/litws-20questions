@@ -1,0 +1,28 @@
+<!-- Template for the results page -->
+<h3 class="bolded-blue" style="text-align: center">{{ data.resultStatement1 }}</h3>
+<h6 style="text-align: center">{{ data.resultStatement2 }}</h6>
+<h6 style="text-align: center; margin-bottom: 30px;" data-i18n="litw-results-graph-info"></h6>
+
+{{#if data.code}}
+<h5 style="text-align: center">
+    <span data-i18n="litw-results-code"></span>
+    <span>{{ data.code }}</span>
+</h5>
+{{/if}}
+
+<div id="participant_personalScore" data-score="{{ data.personalPercentage }}"></div>
+<div id="participant_relationshipsScore" data-score="{{ data.relationshipsPercentage }}"></div>
+<div id="graphic" class="h-100 d-flex align-items-center justify-content-center">
+    <canvas id="myChart" style="max-width: 1000px; margin-bottom: 50px; margin-top: 30px;"></canvas>
+</div>
+
+<div id="results-footer"></div>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        let scorePersonal = document.getElementById('participant_personalScore').dataset.score;
+        let scoreRelationships = document.getElementById('participant_relationshipsScore').dataset.score;
+        LITW.results.drawBarGraphic('myChart', scorePersonal, scoreRelationships);
+    });
+
+</script>
