@@ -7,16 +7,12 @@
   "description": "This is the bare bones of a LITW study. Please check the documentation to learn about how to use it.",
   "dependencies": {
     "alpaca": "^1.5.27",
-    "bootstrap": "^4.3.1",
+    "bootstrap": "^5.3",
     "expose-loader": "^4.1.0",
-    "handlebars": "^4.7.7",
-    "handlebars-loader": "^1.7.3",
     "jquery": "3.6.0",
     "jquery-ui-bundle": "^1.11.4",
     "lodash": "^4.17.21",
-    "popper.js": "^1.16.1",
-    "webpack": "^5.77.0",
-    "webpack-dev-server": "^4.15.0"
+    "popper.js": "^1.16.1"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -29,6 +25,10 @@
     "url": "git@github.com:labinthewild/LITW-study-templates.git"
   },
   "devDependencies": {
+    "handlebars": "^4.7.7",
+    "webpack": "^5.77.0",
+    "webpack-dev-server": "^4.15.0",
+    "html-loader": "^5.0.0",
     "webpack-cli": "^5.1.3"
   }
 }
