@@ -18,7 +18,7 @@
             <h6 id="prompt_{{ this.id }}" style="width: 50%; margin-left: auto; margin-top: 8px;"  data-type="question" class="bolded-blue"></h6>
             <div style="display: flex; justify-content: center; max-width:400px; margin: auto;">
                 <select id="statement-selector-{{ this.id }}" style="max-width: 320px; width: 400px; height: 30px;">
-                    <option style="width:320px;" selected value="0">--</option>
+                    <option style="width:320px;" selected value="NONE">--</option>
                     <option style="width:320px;" data-i18n="litw-question-page2-dropdown1" value="PS"></option>
                     <option style="width:320px;" data-i18n="litw-question-page2-dropdown2" value="RR"></option>
                     <option style="width:320px;" data-i18n="litw-question-page2-dropdown3" value="OS"></option>
@@ -26,10 +26,14 @@
             </div>
         </div>
     {{/each}}
-        <div id="submit" class="row mt-4">
-            <button id="button-save" type="button" class="btn btn-primary center-content" data-bs-toggle="button"
-                    data-i18n="litw-20-questions-save" onclick="finishQuestions()"></button>
-        </div>
+    </div>
+    <div id="complete-alert" class="alert alert-primary alert-dismissible fade show mt-4" role="alert"
+         style="display: none;">
+        <span data-i18n="litw-question-page2-alert"></span>
+    </div>
+    <div id="submit" class="row mt-4">
+        <button id="button-save" type="button" class="btn btn-primary center-content" data-bs-toggle="button"
+                data-i18n="litw-20-questions-save" onclick="finishQuestions()"></button>
     </div>
 </div>
 
@@ -44,14 +48,18 @@
     });
 
     function finishQuestions() {
-        getDropdownValues();
-        document.getElementById('btn-next-page').click()
-    }
-
-    function getDropdownValues() {
-        for (let index = 1; index <= LITW.study.params.numQuestions; index++) {
+        let isComplete = true;
+        document.getElementById('complete-alert').style['display']='none';
+        for (let index = 1; index <= LITW.study.params.numQuestions && isComplete; index++) {
             let selectedStatement =  document.getElementById("statement-selector-" + index);
             LITW.study.params.responsesAndStatements[index] = selectedStatement.value;
+            if(LITW.study.params.responsesAndStatements[index] === 'NONE') {
+                isComplete = false;
+                document.getElementById('complete-alert').style['display']='';
+            }
+        }
+        if(isComplete) {
+            document.getElementById('btn-next-page').click()
         }
     }
 

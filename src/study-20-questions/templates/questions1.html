@@ -16,31 +16,34 @@
             <input style="width: 50%; margin-right: auto" type="text" required="required" id="response-{{ this.id }}" name="response">
         </div>
     {{/each}}
-        <div id="submit" class="row mt-4">
-            <button id="button-save" type="button" class="btn btn-primary center-content" style="width: 75%; margin-left: 15%" data-bs-toggle="button"
-                    data-i18n="litw-20-questions-save" onclick="finishQuestions()"></button>
-        </div>
+    </div>
+    <div id="complete-alert" class="alert alert-primary alert-dismissible fade show mt-4" role="alert"
+         style="display: none;">
+        <span data-i18n="litw-question-page1-alert"></span>
+    </div>
+    <div id="submit" class="row mt-4">
+        <button id="button-save" type="button" class="btn btn-primary center-content" data-bs-toggle="button"
+                data-i18n="litw-20-questions-save" onclick="finishQuestions()"></button>
     </div>
 </div>
 
 <script type="text/javascript">
     LITW.study.params.numQuestions = document.querySelectorAll('[data-type="question"]').length;
 
-    $(document).ready(function() {
-        let elem = document.getElementById("bar");
-        elem.style.width = LITW.study.params.progressBarWidth + "%";
-    });
-
     function finishQuestions() {
-        collectResponses();
-        document.getElementById('btn-next-page').click()
-    }
-
-    function collectResponses() {
-        for (let index = 1; index <= LITW.study.params.numQuestions; index++) {
+        let isComplete = true;
+        document.getElementById('complete-alert').style['display']='none';
+        for (let index = 1; index <= LITW.study.params.numQuestions && isComplete; index++) {
             let input =  document.getElementById("response-" + index);
-            let inputValue = input.value;
+            let inputValue = String(input.value).trim();
+            if (inputValue === '') {
+                isComplete = false;
+                document.getElementById('complete-alert').style['display']='';
+            }
             LITW.study.params.questionsAndResponses[index] = inputValue;
+        }
+        if(isComplete) {
+            document.getElementById('btn-next-page').click();
         }
     }
 
