@@ -12,8 +12,40 @@
 
 <div id="participant_personalScore" data-score="{{ data.personalPercentage }}"></div>
 <div id="participant_relationshipsScore" data-score="{{ data.relationshipsPercentage }}"></div>
-<div id="graphic" class="h-100 d-flex align-items-center justify-content-center">
-    <canvas id="myChart" style="max-width: 1000px; margin-bottom: 50px; margin-top: 30px;"></canvas>
+<div class="accordion pb-4" id="accordionPanelsStayOpenExample">
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+              aria-expanded="true" aria-controls="collapseOne" data-i18n="study-socio-results-viz">
+      </button>
+    </h2>
+    <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+      <div class="accordion-body">
+        <div id="results-main">
+            <div id="graphic" class="h-100 d-flex align-items-center justify-content-center">
+                <canvas id="myChart"></canvas>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="accordion-item">
+    <h2 class="accordion-header">
+      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+              aria-controls="panelsStayOpen-collapseTwo" data-i18n="study-socio-results-ref-title">
+      </button>
+    </h2>
+    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+      <div class="accordion-body">
+        <p data-i18n="study-socio-results-ref-1"></p>
+        <p data-i18n="study-socio-results-ref-2"></p>
+        <p data-i18n="study-socio-results-ref-3"></p>
+        <p data-i18n="study-socio-results-ref-4"></p>
+        <p data-i18n="study-socio-results-ref-5"></p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div id="results-footer"></div>

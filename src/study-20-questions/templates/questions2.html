@@ -1,11 +1,6 @@
-<h6 class="text-center bolded-blue" data-i18n="litw-progress-bar-label"></h6>
-<div style="display: flex; justify-content: center; align-items: center; margin-bottom: 60px;">
-    <p class="bolded-blue" style="margin-right: 10px; margin-bottom: 0px;">0%</p>
-    <div id="progress-bar" style="width: 35%; background-color: rgba(232,232,235,255); border-radius: 50px; ">
-        <div id="bar" style="width: 0%; height: 15px; background-color: rgba(0,52,160,255);  border-radius: 50px; "></div>
-    </div>
-    <p class="bolded-blue" style="margin-left: 10px; margin-bottom: 0px;">100%</p>
-</div>
+{{#if progress}}
+    {{>prog value=progress.value}}
+{{/if}}
 
 <div id="question-box" class="instructions-stim-container">
     <div id="questionnaire">
@@ -15,12 +10,12 @@
             </h3>
         </div>
         <h5 class="text-center" style="padding-top: 20px" data-i18n="litw-question-page2-instructions"></h5>
-        <p class="text-center" style="padding-bottom: 5; padding-top: 20px;" data-i18n="litw-question-page2-personal-info"></p>
+        <p class="text-center" style="padding-bottom: 5px; padding-top: 20px;" data-i18n="litw-question-page2-personal-info"></p>
         <p class="text-center" style="padding-bottom: 5px;" data-i18n="litw-question-page2-relationships-info"></p>
         <p class="text-center" style="padding-bottom: 30px;" data-i18n="litw-question-page2-other-info"></p>
     {{#each questions}}
         <div class="row mt-4" style="display:flex; justify-content: space-around; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; align-items: center;">
-            <h6 style="width: 50%; margin-left: auto; margin-top: 8px;"  data-type="question" class="bolded-blue">{{ this.text }}</h6>
+            <h6 id="prompt_{{ this.id }}" style="width: 50%; margin-left: auto; margin-top: 8px;"  data-type="question" class="bolded-blue"></h6>
             <div style="display: flex; justify-content: center; max-width:400px; margin: auto;">
                 <select id="statement-selector-{{ this.id }}" style="max-width: 320px; width: 400px; height: 30px;">
                     <option style="width:320px;" selected value="0">--</option>
@@ -42,8 +37,10 @@
     LITW.study.params.numQuestions = document.querySelectorAll('[data-type="question"]').length;
 
     $(document).ready(function() {
-        let elem = document.getElementById("bar");
-        elem.style.width = LITW.study.params.progressBarWidth + "%";
+        for( let answer_index in LITW.study.params.questionsAndResponses) {
+            document.getElementById(`prompt_${answer_index}`).textContent =
+                `${answer_index}. ${$.i18n('litw-question-page2-prompt')} ${LITW.study.params.questionsAndResponses[answer_index]}`;
+        }
     });
 
     function finishQuestions() {
