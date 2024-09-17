@@ -19,9 +19,9 @@
             <div style="display: flex; justify-content: center; max-width:400px; margin: auto;">
                 <select id="statement-selector-{{ this.id }}" style="max-width: 320px; width: 400px; height: 30px;">
                     <option style="width:320px;" selected value="0">--</option>
-                    <option style="width:320px;" data-i18n="litw-question-page2-dropdown1"></option>
-                    <option style="width:320px;" data-i18n="litw-question-page2-dropdown2"></option>
-                    <option style="width:320px;" data-i18n="litw-question-page2-dropdown3"></option>
+                    <option style="width:320px;" data-i18n="litw-question-page2-dropdown1" value="PS"></option>
+                    <option style="width:320px;" data-i18n="litw-question-page2-dropdown2" value="RR"></option>
+                    <option style="width:320px;" data-i18n="litw-question-page2-dropdown3" value="OS"></option>
                 </select>
             </div>
         </div>
@@ -51,8 +51,7 @@
     function getDropdownValues() {
         for (let index = 1; index <= LITW.study.params.numQuestions; index++) {
             let selectedStatement =  document.getElementById("statement-selector-" + index);
-            let text = selectedStatement.options[selectedStatement.selectedIndex].text;
-            LITW.study.params.responsesAndStatements[index] = text;
+            LITW.study.params.responsesAndStatements[index] = selectedStatement.value;
         }
     }
 

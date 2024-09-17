@@ -54,13 +54,11 @@ module.exports = (function(exports) {
 		};
 	let timeline = [];
 	let params = {
+		study_id: "c2b9e3c2-e317-44b9-a1ea-92418c89c1b1",
 		questionsAndResponses: {},
 		responsesAndStatements: {},
-		progressBarWidth: -50,
 		numQuestions: 20,
-		pageNum: 1,
 		country: "",
-		study_id: "c2b9e3c2-e317-44b9-a1ea-92418c89c1b1",
 		study_recommendation: [],
 		preLoad: ["../img/btn-next.png","../img/btn-next-active.png","../img/ajax-loader.gif"],
 		slides: {
@@ -177,10 +175,22 @@ module.exports = (function(exports) {
 		let personalScore = 0;
 		let relationshipsScore = 0;
 		let otherScore = 0;
+		//Test data!
+		if (Object.keys(params.responsesAndStatements).length === 0) {
+			params.responsesAndStatements = {1: 'PS', 2: 'RR', 3: 'RR', 4: 'RR', 5: 'PS', 6: 'PS', 7: 'OS', 8: 'OS',
+				9: 'RR', 10: 'PS', 11: 'PS', 12: 'PS', 13: 'RR', 14: 'PS',	15: 'OS', 16: 'OS', 17: 'RR', 18: 'PS',
+				19: 'PS', 20: 'PS'};
+		}
+		if(Object.keys(params.questionsAndResponses).length === 0) {
+			params.questionsAndResponses = {1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'i', 9: 'j',
+				10: 'k', 11: 'l', 12: 'm', 13: 'n', 14: 'o', 15: 'p', 16: 'q', 17: 'r', 18: 's', 19: 't', 20: 'u'}
+		}
+
+		//TODO: Change these responses to be encoded [PS, RRoSS, NONE] instead of having the translatable string!
 		for (const key in params.responsesAndStatements) {
-    		if (params.responsesAndStatements[key] === "Personal Statement") {
+    		if (params.responsesAndStatements[key] === "PS") {
       			personalScore++;
-      		} else if (params.responsesAndStatements[key] === "Relationships, Roles, Or Status Statement") {
+      		} else if (params.responsesAndStatements[key] === "RR") {
 				relationshipsScore++;
 			} else {
 			otherScore++;
