@@ -22,7 +22,7 @@ window._ = require("lodash");
 
 //LOAD THE HTML FOR STUDY PAGES
 import progressHTML from "../templates/progress.html";
-Handlebars.registerPartial('prog', Handlebars.compile(progressHTML));
+Handlebars.registerPartial('prog', progressHTML);
 import introHTML from "./templates/introduction.html";
 import irb_LITW_HTML from "../templates/irb2-litw.html";
 import quest1HTML from "./templates/questions1.html";

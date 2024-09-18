@@ -1,8 +1,8 @@
 var path = require("path");
 
 var config = {
-  mode: 'development',
-  // mode: 'production',
+  // mode: 'development',
+  mode: 'production',
   entry: path.join(__dirname, "study-manager.js"),
   output: {
     path: path.join(__dirname, "js"),
