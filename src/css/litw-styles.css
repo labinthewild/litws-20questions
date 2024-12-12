@@ -1,8 +1,7 @@
 /*************************************************************
  * Base stylesheet for LabintheWild.
- * 
+ *
  * Author: LITW team
- * 
  * © Copyright 2024 LabintheWild
  * For questions about this file and permission to use
  * the code, contact us at info@labinthewild.org
@@ -59,18 +58,18 @@ body {
 	line-height: 22px;
 	color: #222;
 }
-#wrapper, #content { 
+#wrapper, #content {
 	margin: 0 auto;
 	padding-bottom: 5rem;
 }
-#header { 
+#header {
 	margin-top: 0px;
 }
-#share-text { 
-	float:right; 
-	margin-top:15px; 
-	font-size: 13px; 
-	color:#888; 
+#share-text {
+	float:right;
+	margin-top:15px;
+	font-size: 13px;
+	color:#888;
 }
 
 .slide {
@@ -101,9 +100,9 @@ body {
 	width: 710px;
 	border: 0px;
 }
-#likert-scale input { 
-	margin-left: 15px; 
-	margin-right: 15px; 
+#likert-scale input {
+	margin-left: 15px;
+	margin-right: 15px;
 }
 
 .litw-button-group-container {
@@ -203,8 +202,8 @@ body {
 	margin-bottom: 30px;
 }
 
-#comments { 
-	text-align: center; 
+#comments {
+	text-align: center;
 }
 textarea.comments-box, textarea.comments_box {
 	padding: 15px;
@@ -350,7 +349,7 @@ textarea.comments-box, textarea.comments_box {
 	user-select: none;
 	cursor: pointer;
 }
-.btn-next-page:active, #btn-next-page:active { 
+.btn-next-page:active, #btn-next-page:active {
 	background: url("../img/btn-next-active.png");
 }
 
@@ -359,9 +358,9 @@ textarea.comments-box, textarea.comments_box {
  * IMAGES
  *******************************************/
 
-#logo { 
-	float: left; 
-	margin-top: 30px; 
+#logo {
+	float: left;
+	margin-top: 30px;
 	margin-bottom: 15px;
 	width: 300px;
 }
@@ -414,7 +413,7 @@ select {
 	margin-bottom: 15px;
 	border: 1pt solid transparent;
 	border-radius: 7px;
-	padding: 3px;	
+	padding: 3px;
 }
 .expansion-element {
 	margin-left: 20px;
@@ -599,12 +598,12 @@ select {
  * LINKS
  *******************************************/
 
-a:link, a:visited, a:hover { 
-	text-decoration: none; 
-	color: #0099cc; 
+a:link, a:visited, a:hover {
+	text-decoration: none;
+	color: #0099cc;
 }
-a:active { 
-	color: #003b4e; 
+a:active {
+	color: #003b4e;
 }
 
 
@@ -636,13 +635,13 @@ a:active {
 	margin-top: -50px;
   margin-left: -50px;
 }
-.warn { 
-	color: #f00; 
-	font-weight: bold; 
+.warn {
+	color: #f00;
+	font-weight: bold;
 }
-.bolded-blue { 
-	font-weight: bold; 
-	color: #3f6379; 
+.bolded-blue {
+	font-weight: bold;
+	color: #3f6379;
 }
 .bolded-italic {
 	font-weight: bold;
@@ -699,4 +698,8 @@ a:active {
 	margin: 5px;
 	max-width: 99%;
 	height: 98%
+}
+
+ol .active {
+	background-color: #003b4e;
 }
