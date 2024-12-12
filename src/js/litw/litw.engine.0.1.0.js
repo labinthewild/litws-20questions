@@ -59,10 +59,11 @@ let set_slides = (slides_config = []) => {
  * ALERT: This is non-blocking (as the human reading first slides should be enough time to preLoad everything).
  * CHECK: https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload
  * @param preload list of paths to resources. If file NOT '.json' it will be loaded as 'image'
+ * @param study_id
  * @return {number} the number of preload requested resources.
  */
-function preload_resources(preload) {
-    LITW.engage.getStudiesRecommendation((studies_list) => {});
+function preload_resources(preload, study_id="") {
+    LITW.engage.getStudiesRecommendation(study_id, (studies_list) => {});
     let count = 0;
     for(let resource of preload) {
         let preloadLink = document.createElement("link");
@@ -82,11 +83,12 @@ let configure_study = (
     preload = [],
     available_lang = {'default': 'en', 'en': './i18n/en.json'},
     slides_config = [],
+    study_id = ""
 ) => {
     document.getElementById('btn-next-page').onclick = () => { finish_slide() };
     let language_files = set_lang_to_load(available_lang);
     if (language_files) {
-        let preloaded = preload_resources(preload);
+        let preloaded = preload_resources(preload, study_id);
         let good_slides = set_slides(slides_config);
         if (good_slides) {
             LITW.data.initialize();

@@ -263,7 +263,8 @@ module.exports = (function(exports) {
 
 
 	function bootstrap() {
-		let good_config = LITW.engine.configure_study(config.preLoad, config.languages, configureTimeline());
+		let good_config = LITW.engine.configure_study(config.preLoad, config.languages,
+			configureTimeline(), config.study_id);
 		if (good_config){
 			LITW.engine.start_study();
 		} else {
