@@ -1,7 +1,7 @@
 {{#if progress}}
-    {{>prog value=progress.value}}
+{{>prog value=progress.value}}
 {{/if}}
-
+<div id="questions-data" data-max-quest="{{ num_quest }}" data-min-resp="{{ min_num_resp }}"></div>
 <div id="question-box" class="instructions-stim-container">
     <div id="questionnaire">
         <div class="row gap-2">
@@ -9,17 +9,26 @@
                 <span data-i18n="litw-question-page1-title"></span>
             </h3>
         </div>
-        <h6 class="text-center" style="padding-bottom: 30px; padding-top: 20px" data-i18n="litw-question-page1-instructions"></h6>
-    {{#each questions}}
-        <div class="row mt-4" style="display:flex; justify-content: space-around; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; align-items: center;">
-            <h6 style="width: 120px; margin-left: auto; margin-top: 8px;"  data-type="question" class="bolded-blue">{{ this.text }}</h6>
-            <input style="width: 50%; margin-right: auto" type="text" required="required" id="response-{{ this.id }}" name="response">
+        <h5 id="instruct-main" class="text-center pt-3" data-i18n="litw-question-page1-instructions"></h5>
+        <ul class="text-start mx-auto" style="max-width: 500px">
+            <li data-i18n="litw-question-page1-instructions-p1"></li>
+            <li data-i18n="litw-question-page1-instructions-p2"></li>
+            <li data-i18n="litw-question-page1-instructions-p3"></li>
+            <li data-i18n="litw-question-page1-instructions-p4"></li>
+        </ul>
+        {{#each questions}}
+        <div class="row mt-4"
+             style="display:flex; justify-content: space-around; flex-direction: row; flex-wrap: nowrap; align-content: flex-end; align-items: center;">
+            <h6 style="width: 120px; margin-left: auto; margin-top: 8px;" data-type="question"
+                class="bolded-blue">{{ this.text }}</h6>
+            <input style="width: 50%; margin-right: auto" type="text" required="required" id="response-{{ this.id }}"
+                   name="response">
         </div>
-    {{/each}}
+        {{/each}}
     </div>
     <div id="complete-alert" class="alert alert-primary alert-dismissible fade show mt-4" role="alert"
          style="display: none;">
-        <span data-i18n="litw-question-page1-alert"></span>
+        <span id="alert-msg" data-i18n="litw-question-page1-alert"></span>
     </div>
     <div id="submit" class="row mt-4">
         <button id="button-save" type="button" class="btn btn-primary center-content" data-bs-toggle="button"
@@ -28,23 +37,37 @@
 </div>
 
 <script type="text/javascript">
-    LITW.study.params.numQuestions = document.querySelectorAll('[data-type="question"]').length;
+    min_num_resp = document.getElementById('questions-data').dataset.minResp;
+    max_num_quest = document.getElementById('questions-data').dataset.maxQuest;
+
+    function setupQuest() {
+        let alertMSG = document.getElementById('alert-msg');
+        let instructMAIN = document.getElementById('instruct-main');
+        alertMSG.innerText = alertMSG.innerText.replace('>>MIN_RESP<<', min_num_resp);
+        instructMAIN.innerText = instructMAIN.innerText.replace('>>MIN_RESP<<', min_num_resp);
+    }
 
     function finishQuestions() {
-        let isComplete = true;
-        document.getElementById('complete-alert').style['display']='none';
-        for (let index = 1; index <= LITW.study.params.numQuestions && isComplete; index++) {
-            let input =  document.getElementById("response-" + index);
+        let countResponses = 0;
+        document.getElementById('complete-alert').style['display'] = 'none';
+        for (let index = 1; index <= max_num_quest; index++) {
+            let input = document.getElementById("response-" + index);
             let inputValue = String(input.value).trim();
-            if (inputValue === '') {
-                isComplete = false;
-                document.getElementById('complete-alert').style['display']='';
+            if (inputValue !== '') {
+                LITW.study.params.questionsAndResponses[index] = inputValue;
+                countResponses++;
+            } else {
+                delete LITW.study.params.questionsAndResponses[index];
             }
-            LITW.study.params.questionsAndResponses[index] = inputValue;
         }
-        if(isComplete) {
+        if (countResponses >= LITW.study.params.minNumResponses) {
             document.getElementById('btn-next-page').click();
+        } else {
+            document.getElementById('complete-alert').style['display'] = '';
         }
     }
 
+    $(document).ready(function () {
+        setupQuest();
+    });
 </script>
